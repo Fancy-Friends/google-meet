@@ -1,0 +1,56 @@
+{
+  "$comment": "GET /v2/conferenceRecords/{conferenceRecordId}/transcripts/{transcriptId}/entries -- verified against the Meet API v2 Discovery Document 2026-09-16. The actual spoken-word text, one entry per continuous utterance, in order. This is POST-MEETING only -- Meet's stable REST API has no live/streaming transcript; that is the Media API's job, developer-preview and out of scope here (see the provider's own $comment).",
+  "operation": "transcript_entry_list",
+  "kind": "transcript_entry_list",
+  "title": "List transcript entries",
+  "description": "Read a finished conference's transcript, one utterance per entry.",
+  "summary": "transcript entries",
+  "icon": "📝",
+  "docs": "https://developers.google.com/workspace/meet/api/reference/rest/v2/conferenceRecords.transcripts.entries/list",
+
+  "sideEffects": "none",
+
+  "request": {
+    "method": "GET",
+    "path": "/conferenceRecords/{conferenceRecordId}/transcripts/{transcriptId}/entries",
+    "encoding": "json"
+  },
+
+  "config": [
+    {
+      "type": "text",
+      "key": "conferenceRecordId",
+      "label": "Conference record ID",
+      "required": true,
+      "description": "The id from conference_record_list's data.conferenceRecords[].name (give the id after conferenceRecords/).",
+      "send": { "in": "path", "as": "conferenceRecordId", "value": "string" }
+    },
+    {
+      "type": "text",
+      "key": "transcriptId",
+      "label": "Transcript ID",
+      "required": true,
+      "description": "The id from transcript_list's data.transcripts[].name (give the id after transcripts/).",
+      "send": { "in": "path", "as": "transcriptId", "value": "string" }
+    },
+    {
+      "type": "text",
+      "key": "pageToken",
+      "label": "Page token",
+      "description": "From a previous call's data.nextPageToken.",
+      "send": { "in": "query", "as": "pageToken", "value": "string", "omitEmpty": true }
+    }
+  ],
+
+  "defaultConfig": { "mode": "auto" },
+
+  "outputShape": [
+    { "path": "data.transcriptEntries", "type": "array", "description": "This page's entries, in order. Each has name, participant (participants/{id} -- join against participant_list to get a display name), text (the spoken words), languageCode, startTime and endTime." },
+    { "path": "data.nextPageToken", "type": "string", "description": "Present when there is another page." }
+  ],
+
+  "contract": {
+    "sends": ["pageToken"],
+    "reads": ["transcriptEntries", "nextPageToken"]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$comment": "One finished conference, the last page (no nextSyncToken). startTime/endTime span forty minutes -- an author checking duration math has real numbers to check against.",
+  "operation": "conference_record_list",
+
+  "response": {
+    "conferenceRecords": [
+      {
+        "name": { "$fake": "id", "prefix": "conferenceRecords" },
+        "startTime": "2026-09-15T14:00:00.000Z",
+        "endTime": "2026-09-15T14:40:12.000Z",
+        "expireTime": "2026-10-15T14:40:12.000Z",
+        "space": "spaces/abc123def456"
+      }
+    ]
+  }
+}

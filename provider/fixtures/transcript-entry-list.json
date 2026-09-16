@@ -1,0 +1,25 @@
+{
+  "$comment": "Two entries in speaking order, from two different participants -- the shape an author reconstructs a conversation from. participant is a resource name, not a display name; joining against participant_list is what a real flow does to show who said what.",
+  "operation": "transcript_entry_list",
+
+  "response": {
+    "transcriptEntries": [
+      {
+        "name": { "$fake": "id", "prefix": "entries" },
+        "participant": "participants/p1",
+        "text": "Let's start with the roadmap.",
+        "languageCode": "en-US",
+        "startTime": "2026-09-15T14:00:12.000Z",
+        "endTime": "2026-09-15T14:00:15.000Z"
+      },
+      {
+        "name": { "$fake": "id", "prefix": "entries" },
+        "participant": "participants/p2",
+        "text": "Sounds good, I'll share my screen.",
+        "languageCode": "en-US",
+        "startTime": "2026-09-15T14:00:16.000Z",
+        "endTime": "2026-09-15T14:00:19.000Z"
+      }
+    ]
+  }
+}

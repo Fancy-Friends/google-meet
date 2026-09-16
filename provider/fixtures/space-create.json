@@ -1,0 +1,14 @@
+{
+  "$comment": "A newly created space, echoing back the access settings that were asked for -- or Google's own defaults (OPEN, ALL) when they were left blank, exactly as a real create would.",
+  "operation": "space_create",
+
+  "response": {
+    "name": { "$fake": "id", "prefix": "spaces" },
+    "meetingUri": "https://meet.google.com/abc-defg-hij",
+    "meetingCode": "abc-defg-hij",
+    "config": {
+      "accessType": { "$config": "accessType", "as": "string", "default": "OPEN" },
+      "entryPointAccess": { "$config": "entryPointAccess", "as": "string", "default": "ALL" }
+    }
+  }
+}

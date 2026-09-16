@@ -1,0 +1,17 @@
+{
+  "$comment": "A space with a conference LIVE right now (activeConference present) -- the shape an author designs the \"is a meeting happening\" branch against. The name echoes the id that was asked for.",
+  "operation": "space_get",
+
+  "response": {
+    "name": { "$config": "spaceId", "as": "string", "fallback": { "$fake": "id", "prefix": "spaces" } },
+    "meetingUri": "https://meet.google.com/abc-defg-hij",
+    "meetingCode": "abc-defg-hij",
+    "config": {
+      "accessType": "TRUSTED",
+      "entryPointAccess": "ALL"
+    },
+    "activeConference": {
+      "conferenceRecord": { "$fake": "id", "prefix": "conferenceRecords" }
+    }
+  }
+}

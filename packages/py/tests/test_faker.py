@@ -1,0 +1,171 @@
+# GENERATED FILE — do not edit.
+#
+# Emitted from provider/fixtures/ by weaver's generator.
+# A hand-edit here is destroyed by the next protocol sync, which is worse than
+# being rejected, because it works until it silently does not. Fix
+# provider/fixtures/ (or weaver's template/) and regenerate:
+#
+# npm run provider -- google_meet
+
+"""The golden fixtures — the SAME values the TypeScript and PHP packages
+assert.
+
+Bit-for-bit identical is the claim, and this is what checks it for Python.
+Cross-runtime drift does not fail loudly on its own: it completes, down one
+path, with no error.
+"""
+
+import pytest
+
+from fancy_google_meet._fake import FakeValues, seed_for_call
+from fancy_google_meet.faker import respond
+
+
+def test_conference_record_list_fakes_the_published_shape() -> None:
+    config = {}
+    fake = FakeValues(seed_for_call("google_meet", "conference_record_list", config))
+
+    faked = respond("conference_record_list", {"config": config, "fake": fake})
+
+    assert faked == {
+        "conferenceRecords": [
+            {
+                "name": "conferenceRecords_fake_45a444b26b7e",
+                "startTime": "2026-09-15T14:00:00.000Z",
+                "endTime": "2026-09-15T14:40:12.000Z",
+                "expireTime": "2026-10-15T14:40:12.000Z",
+                "space": "spaces/abc123def456",
+            },
+        ],
+    }
+
+
+def test_participant_list_fakes_the_published_shape() -> None:
+    config = {}
+    fake = FakeValues(seed_for_call("google_meet", "participant_list", config))
+
+    faked = respond("participant_list", {"config": config, "fake": fake})
+
+    assert faked == {
+        "participants": [
+            {
+                "name": "participants_fake_b9f850ddcf96",
+                "earliestStartTime": "2026-09-15T14:00:05.000Z",
+                "latestEndTime": "2026-09-15T14:40:00.000Z",
+                "signedinUser": {
+                    "user": "users/ada",
+                    "displayName": "Ada Lovelace",
+                },
+            },
+            {
+                "name": "participants_fake_de63760da4f3",
+                "earliestStartTime": "2026-09-15T14:01:30.000Z",
+                "latestEndTime": "2026-09-15T14:38:00.000Z",
+                "anonymousUser": {
+                    "displayName": "Guest",
+                },
+            },
+            {
+                "name": "participants_fake_455cdcf806b5",
+                "earliestStartTime": "2026-09-15T14:02:00.000Z",
+                "latestEndTime": "2026-09-15T14:15:00.000Z",
+                "phoneUser": {
+                    "displayName": "+1 555-***-0100",
+                },
+            },
+        ],
+    }
+
+
+def test_space_create_fakes_the_published_shape() -> None:
+    config = {}
+    fake = FakeValues(seed_for_call("google_meet", "space_create", config))
+
+    faked = respond("space_create", {"config": config, "fake": fake})
+
+    assert faked == {
+        "name": "spaces_fake_a5eb17d8251e",
+        "meetingUri": "https://meet.google.com/abc-defg-hij",
+        "meetingCode": "abc-defg-hij",
+        "config": {
+            "accessType": "OPEN",
+            "entryPointAccess": "ALL",
+        },
+    }
+
+
+def test_space_get_fakes_the_published_shape() -> None:
+    config = {}
+    fake = FakeValues(seed_for_call("google_meet", "space_get", config))
+
+    faked = respond("space_get", {"config": config, "fake": fake})
+
+    assert faked == {
+        "name": "spaces_fake_06f98e98d278",
+        "meetingUri": "https://meet.google.com/abc-defg-hij",
+        "meetingCode": "abc-defg-hij",
+        "config": {
+            "accessType": "TRUSTED",
+            "entryPointAccess": "ALL",
+        },
+        "activeConference": {
+            "conferenceRecord": "conferenceRecords_fake_495225bbb14d",
+        },
+    }
+
+
+def test_transcript_entry_list_fakes_the_published_shape() -> None:
+    config = {}
+    fake = FakeValues(seed_for_call("google_meet", "transcript_entry_list", config))
+
+    faked = respond("transcript_entry_list", {"config": config, "fake": fake})
+
+    assert faked == {
+        "transcriptEntries": [
+            {
+                "name": "entries_fake_0c7bb3783885",
+                "participant": "participants/p1",
+                "text": "Let's start with the roadmap.",
+                "languageCode": "en-US",
+                "startTime": "2026-09-15T14:00:12.000Z",
+                "endTime": "2026-09-15T14:00:15.000Z",
+            },
+            {
+                "name": "entries_fake_80ea4613cd20",
+                "participant": "participants/p2",
+                "text": "Sounds good, I'll share my screen.",
+                "languageCode": "en-US",
+                "startTime": "2026-09-15T14:00:16.000Z",
+                "endTime": "2026-09-15T14:00:19.000Z",
+            },
+        ],
+    }
+
+
+def test_transcript_list_fakes_the_published_shape() -> None:
+    config = {}
+    fake = FakeValues(seed_for_call("google_meet", "transcript_list", config))
+
+    faked = respond("transcript_list", {"config": config, "fake": fake})
+
+    assert faked == {
+        "transcripts": [
+            {
+                "name": "transcripts_fake_eea981f20c62",
+                "state": "ENDED",
+                "startTime": "2026-09-15T14:00:10.000Z",
+                "endTime": "2026-09-15T14:40:05.000Z",
+                "docsDestination": {
+                    "document": "doc_fake_297e7e113139",
+                    "exportUri": "https://docs.google.com/document/d/abcdef123456",
+                },
+            },
+        ],
+    }
+
+
+def test_an_operation_with_no_fixture_raises_rather_than_inventing_a_shape() -> None:
+    fake = FakeValues(seed_for_call("google_meet", "no_such_operation", {}))
+
+    with pytest.raises(ValueError, match="no fake response"):
+        respond("no_such_operation", {"config": {}, "fake": fake})

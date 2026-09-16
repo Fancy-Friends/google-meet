@@ -1,0 +1,56 @@
+{
+  "$comment": "GET /v2/conferenceRecords -- verified against the Meet API v2 Discovery Document 2026-09-16. Past (and the current, if one is live) conferences, optionally filtered to one space. Google's filter grammar is its own (space.name = \"spaces/{id}\"), passed through verbatim -- this action does not attempt to build it from separate fields, matching how facebook-lead-ads and others pass a provider's own query language through rather than half-reimplementing it.",
+  "operation": "conference_record_list",
+  "kind": "conference_record_list",
+  "title": "List conference records",
+  "description": "List past conferences, optionally filtered to one space.",
+  "summary": "conference records",
+  "icon": "🎥",
+  "docs": "https://developers.google.com/workspace/meet/api/reference/rest/v2/conferenceRecords/list",
+
+  "sideEffects": "none",
+
+  "request": {
+    "method": "GET",
+    "path": "/conferenceRecords",
+    "encoding": "json"
+  },
+
+  "config": [
+    {
+      "type": "text",
+      "key": "filter",
+      "label": "Filter",
+      "description": "Google's filter grammar, e.g. space.name = \"spaces/abc123\" to see one space's history, or space.meeting_code = \"abc-defg-hij\". Leave blank for every conference the account can see.",
+      "send": { "in": "query", "as": "filter", "value": "string", "omitEmpty": true }
+    },
+    {
+      "type": "number",
+      "key": "pageSize",
+      "label": "Page size",
+      "min": 1,
+      "max": 100,
+      "description": "Records per page. Leave blank for Google's default.",
+      "send": { "in": "query", "as": "pageSize", "value": "integer", "min": 1, "max": 100, "omitEmpty": true }
+    },
+    {
+      "type": "text",
+      "key": "pageToken",
+      "label": "Page token",
+      "description": "From a previous call's data.nextPageToken.",
+      "send": { "in": "query", "as": "pageToken", "value": "string", "omitEmpty": true }
+    }
+  ],
+
+  "defaultConfig": { "mode": "auto" },
+
+  "outputShape": [
+    { "path": "data.conferenceRecords", "type": "array", "description": "This page's records, each with name (conferenceRecords/{id}), startTime, endTime, expireTime and space (the spaces/{id} it belongs to)." },
+    { "path": "data.nextPageToken", "type": "string", "description": "Present when there is another page." }
+  ],
+
+  "contract": {
+    "sends": ["filter", "pageSize", "pageToken"],
+    "reads": ["conferenceRecords", "nextPageToken"]
+  }
+}

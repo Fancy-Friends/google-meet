@@ -1,0 +1,60 @@
+{
+  "$comment": "POST /v2/spaces -- verified against the Meet API v2 Discovery Document 2026-09-16. Every field is optional; an empty body creates a space with Google's defaults. The response's meetingUri is the join link the meeting bot's runtime (out of scope for this connector) actually joins.",
+  "operation": "space_create",
+  "kind": "space_create",
+  "title": "Create meeting space",
+  "description": "Create a new Google Meet space and get its join link.",
+  "summary": "a Meet space",
+  "icon": "🎥",
+  "docs": "https://developers.google.com/workspace/meet/api/reference/rest/v2/spaces/create",
+
+  "sideEffects": "unsafe-to-replay",
+  "$idempotencyComment": "spaces.create has no documented idempotency key. A retry creates a SECOND space with its own meeting code and link, never returns the first.",
+
+  "request": {
+    "method": "POST",
+    "path": "/spaces",
+    "encoding": "json"
+  },
+
+  "config": [
+    {
+      "type": "select",
+      "key": "accessType",
+      "label": "Who can join",
+      "description": "OPEN: anyone with the link, no knock. TRUSTED: anyone in your organization, no knock; others knock. RESTRICTED: only people and groups explicitly invited. Leave blank for Google's account default.",
+      "options": [
+        { "value": "OPEN", "label": "Open — anyone with the link" },
+        { "value": "TRUSTED", "label": "Trusted — your organization joins directly" },
+        { "value": "RESTRICTED", "label": "Restricted — invited people and groups only" }
+      ],
+      "send": { "as": "config.accessType", "value": "string", "omitEmpty": true }
+    },
+    {
+      "type": "select",
+      "key": "entryPointAccess",
+      "label": "Entry points",
+      "description": "ALL: any Meet client (web, mobile, phone dial-in, the calling API). CREATOR_APP_ONLY: only the app that created the space, and only through the Meet REST API and SIP — no phone dial-in and no other Meet client. Leave blank for Google's default (ALL).",
+      "options": [
+        { "value": "ALL", "label": "All entry points" },
+        { "value": "CREATOR_APP_ONLY", "label": "This app only" }
+      ],
+      "send": { "as": "config.entryPointAccess", "value": "string", "omitEmpty": true }
+    }
+  ],
+
+  "defaultConfig": { "mode": "auto" },
+
+  "outputShape": [
+    { "path": "data.name", "type": "string", "description": "The space's resource name, spaces/{id}." },
+    { "path": "data.meetingUri", "type": "string", "description": "The join link." },
+    { "path": "data.meetingCode", "type": "string", "description": "The short, human-typeable code shown in the Meet UI (part of meetingUri)." },
+    { "path": "data.config.accessType", "type": "string", "description": "Echoes what was requested, or Google's default when omitted." },
+    { "path": "data.config.entryPointAccess", "type": "string", "description": "Echoes what was requested, or Google's default (ALL) when omitted." }
+  ],
+
+  "contract": {
+    "sends": ["config.accessType", "config.entryPointAccess"],
+    "reads": ["name", "meetingUri", "meetingCode", "config"]
+  }
+}

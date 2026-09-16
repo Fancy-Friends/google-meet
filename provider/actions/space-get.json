@@ -1,0 +1,45 @@
+{
+  "$comment": "GET /v2/spaces/{spaceId} -- verified against the Meet API v2 Discovery Document 2026-09-16. Reads a space's CURRENT state, including whether a conference is live right now (activeConference) -- the field a host polls to learn a meeting has started.",
+  "operation": "space_get",
+  "kind": "space_get",
+  "title": "Get meeting space",
+  "description": "Read a Meet space's current state, including whether a conference is active right now.",
+  "summary": "a Meet space",
+  "icon": "🎥",
+  "docs": "https://developers.google.com/workspace/meet/api/reference/rest/v2/spaces/get",
+
+  "sideEffects": "none",
+
+  "request": {
+    "method": "GET",
+    "path": "/spaces/{spaceId}",
+    "encoding": "json"
+  },
+
+  "config": [
+    {
+      "type": "text",
+      "key": "spaceId",
+      "label": "Space ID",
+      "required": true,
+      "description": "The id from space_create's data.name (spaces/{id} -- give the id after the slash), or the meeting code shown in Meet's own UI. NOT independently spot-checked that the meeting-code form resolves through this exact endpoint; verify with a live call before relying on it.",
+      "send": { "in": "path", "as": "spaceId", "value": "string" }
+    }
+  ],
+
+  "defaultConfig": { "mode": "auto" },
+
+  "outputShape": [
+    { "path": "data.name", "type": "string", "description": "The space's resource name, spaces/{id}." },
+    { "path": "data.meetingUri", "type": "string", "description": "The join link." },
+    { "path": "data.meetingCode", "type": "string", "description": "The short, human-typeable code." },
+    { "path": "data.config.accessType", "type": "string", "description": "OPEN, TRUSTED or RESTRICTED." },
+    { "path": "data.config.entryPointAccess", "type": "string", "description": "ALL or CREATOR_APP_ONLY." },
+    { "path": "data.activeConference.conferenceRecord", "type": "string", "description": "Present only while a conference is LIVE right now — the conferenceRecords/{id} resource name to read once it ends. Absent between meetings." }
+  ],
+
+  "contract": {
+    "sends": [],
+    "reads": ["name", "meetingUri", "meetingCode", "config", "activeConference"]
+  }
+}

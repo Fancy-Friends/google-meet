@@ -1,0 +1,40 @@
+{
+  "$comment": "GET /v2/conferenceRecords/{conferenceRecordId}/transcripts -- verified against the Meet API v2 Discovery Document 2026-09-16. A conference has a transcript only when transcription was turned on for that meeting; this can come back empty. docsDestination.exportUri is a Google Docs export a human can open, separate from the per-utterance text transcript_entry_list reads.",
+  "operation": "transcript_list",
+  "kind": "transcript_list",
+  "title": "List transcripts",
+  "description": "List a finished conference's transcripts, when transcription was on.",
+  "summary": "a conference's transcripts",
+  "icon": "📝",
+  "docs": "https://developers.google.com/workspace/meet/api/reference/rest/v2/conferenceRecords.transcripts/list",
+
+  "sideEffects": "none",
+
+  "request": {
+    "method": "GET",
+    "path": "/conferenceRecords/{conferenceRecordId}/transcripts",
+    "encoding": "json"
+  },
+
+  "config": [
+    {
+      "type": "text",
+      "key": "conferenceRecordId",
+      "label": "Conference record ID",
+      "required": true,
+      "description": "The id from conference_record_list's data.conferenceRecords[].name (conferenceRecords/{id} -- give the id after the slash).",
+      "send": { "in": "path", "as": "conferenceRecordId", "value": "string" }
+    }
+  ],
+
+  "defaultConfig": { "mode": "auto" },
+
+  "outputShape": [
+    { "path": "data.transcripts", "type": "array", "description": "Usually one, unless the meeting was recorded in segments. Each has name (…/transcripts/{id} -- what transcript_entry_list needs), state, startTime, endTime, and docsDestination.exportUri (a Google Docs link, when export finished)." }
+  ],
+
+  "contract": {
+    "sends": [],
+    "reads": ["transcripts"]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$comment": "One completed transcript with its Docs export ready. state ENDED is what a host waits for before calling transcript_entry_list -- reading entries of a transcript still in progress finds nothing yet.",
+  "operation": "transcript_list",
+
+  "response": {
+    "transcripts": [
+      {
+        "name": { "$fake": "id", "prefix": "transcripts" },
+        "state": "ENDED",
+        "startTime": "2026-09-15T14:00:10.000Z",
+        "endTime": "2026-09-15T14:40:05.000Z",
+        "docsDestination": {
+          "document": { "$fake": "id", "prefix": "doc" },
+          "exportUri": "https://docs.google.com/document/d/abcdef123456"
+        }
+      }
+    ]
+  }
+}

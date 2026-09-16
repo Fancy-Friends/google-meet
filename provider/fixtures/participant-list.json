@@ -1,0 +1,27 @@
+{
+  "$comment": "Three participants, one of each kind Meet actually returns -- a signed-in user, an anonymous guest, and a phone dial-in -- because exactly one of signedinUser/anonymousUser/phoneUser is set per row and an author has to see all three shapes to branch on them correctly. earliestStartTime/latestEndTime span the WHOLE attendance, not one join/leave pair.",
+  "operation": "participant_list",
+
+  "response": {
+    "participants": [
+      {
+        "name": { "$fake": "id", "prefix": "participants" },
+        "earliestStartTime": "2026-09-15T14:00:05.000Z",
+        "latestEndTime": "2026-09-15T14:40:00.000Z",
+        "signedinUser": { "user": "users/ada", "displayName": "Ada Lovelace" }
+      },
+      {
+        "name": { "$fake": "id", "prefix": "participants" },
+        "earliestStartTime": "2026-09-15T14:01:30.000Z",
+        "latestEndTime": "2026-09-15T14:38:00.000Z",
+        "anonymousUser": { "displayName": "Guest" }
+      },
+      {
+        "name": { "$fake": "id", "prefix": "participants" },
+        "earliestStartTime": "2026-09-15T14:02:00.000Z",
+        "latestEndTime": "2026-09-15T14:15:00.000Z",
+        "phoneUser": { "displayName": "+1 555-***-0100" }
+      }
+    ]
+  }
+}
