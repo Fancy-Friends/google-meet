@@ -20,12 +20,12 @@ return [
 
     'credentials' => [
         // OAuth client ID (one per installation).
-        'clientId' => env('GOOGLE_MEET_CLIENTID'),
+        'clientId' => env('GOOGLE_MEET_CLIENT_ID', env('GOOGLE_MEET_CLIENTID')),
         // OAuth client secret (one per installation, secret).
-        'clientSecret' => env('GOOGLE_MEET_CLIENTSECRET'),
+        'clientSecret' => env('GOOGLE_MEET_CLIENT_SECRET', env('GOOGLE_MEET_CLIENTSECRET')),
         // Access token (per connected account, secret).
-        'accessToken' => env('GOOGLE_MEET_ACCESSTOKEN'),
+        'accessToken' => env('GOOGLE_MEET_ACCESS_TOKEN', env('GOOGLE_MEET_ACCESSTOKEN')),
         // Refresh token (per connected account, secret).
-        'refreshToken' => env('GOOGLE_MEET_REFRESHTOKEN'),
+        'refreshToken' => env('GOOGLE_MEET_REFRESH_TOKEN', env('GOOGLE_MEET_REFRESHTOKEN')),
     ],
 ];
