@@ -12,6 +12,22 @@ derived — somebody has to write what changed — but writing it in the
 provider repo would be a hand-edit that `.weaver.json` flags and the next
 sync destroys.
 
+## [0.3.1] — 2026-11-08
+
+### Fixed
+
+- **The Laravel config's environment variable names now split camelCase**,
+  as documented. **Consumer action: none.** The old unsplit names are still
+  read as a fallback, so an app that set them keeps working; the new names
+  are preferred.
+
+  | Preferred | Still read |
+  |---|---|
+  | `GOOGLE_MEET_CLIENT_ID` | `GOOGLE_MEET_CLIENTID` |
+  | `GOOGLE_MEET_CLIENT_SECRET` | `GOOGLE_MEET_CLIENTSECRET` |
+  | `GOOGLE_MEET_ACCESS_TOKEN` | `GOOGLE_MEET_ACCESSTOKEN` |
+  | `GOOGLE_MEET_REFRESH_TOKEN` | `GOOGLE_MEET_REFRESHTOKEN` |
+
 ## [0.3.0] — 2026-11-08
 
 ### Added
