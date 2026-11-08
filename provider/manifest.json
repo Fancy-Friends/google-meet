@@ -27,6 +27,19 @@
     "refreshTokenRotates": false,
     "$refreshTokenRotates": "Google's OAuth2 refresh tokens are reusable and do not rotate on refresh; the standard documented behaviour every other Google provider in this estate already declares the same way (google-calendar, google-sheets, …).",
     "accessTokenTtlSeconds": 3600,
+    "$grantComment": "ONE consent grant shared by every Google connector (MOIC #1, 2026-11-08). A host may run them all on one OAuth client: request each feature's scopes when it is first used, with include_granted_scopes=true, and Google's new token covers every scope granted before. A refresh token comes back only on the FIRST code exchange with access_type=offline, so keep the stored one when an exchange returns none. Revoking ANY token removes the person's WHOLE grant -- every Google connector, not this one -- so a per-feature disconnect stops using the scope locally and only a full Google disconnect revokes. Identify the account by the id_token's sub (request openid; verify iss and aud = clientId), never by email.",
+    "grant": "google",
+    "authorizeParams": { "access_type": "offline", "include_granted_scopes": "true" },
+    "revoke": { "url": "https://oauth2.googleapis.com/revoke", "param": "token", "scope": "grant" },
+    "identity": {
+      "scope": "openid",
+      "claim": "sub",
+      "issuers": ["https://accounts.google.com", "accounts.google.com"],
+      "jwksUrl": "https://www.googleapis.com/oauth2/v3/certs",
+      "audienceCredential": "clientId"
+    },
+    "$restrictedScopesComment": "Google's RESTRICTED tier puts the whole OAuth client under verification and an annual CASA assessment. None of this connector's scopes is restricted.",
+    "restrictedScopes": [],
     "$scopeComment": "meetings.space.created is what space_create and space_get need (\"conferences created by the app\"). meetings.space.readonly is what conference_record_list, participant_list, transcript_list and transcript_entry_list need -- Google's own wording is broader (\"any of your Google Meet conferences\"), not only app-created ones. A host that only asks for one gets a 4xx on the other, not a silent gap.",
     "$comment": "Authorization Code. Google's discovery document declares no PKCE requirement for this API beyond what every Google OAuth2 client already follows; not declared here for the same reason it is not declared on google-calendar or google-sheets."
   },
